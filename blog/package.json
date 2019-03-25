@@ -1,0 +1,13 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./bin/www.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=dev nodemon ./bin/www.js",
+    "build": "cross-env NODE_ENV=production nodemon ./bin/www.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
