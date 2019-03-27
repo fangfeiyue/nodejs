@@ -1,10 +1,13 @@
-const { getList, getDetail } = require('../controller/blog');
+const { 
+  getList, 
+  getDetail,
+  newBlog
+} = require('../controller/blog');
 const { ErrorModel, SuccessModal } = require('../model/resModel');
 
 const handleBlogRouter = (req, res) => {
   const { method, url } = req;
   const path = url&&url.split('?')[0];
-
   // 获取博客列表
   if (method == 'GET' && path == "/api/blog/list") {
     const { author, keyword } = req.query;
@@ -21,9 +24,8 @@ const handleBlogRouter = (req, res) => {
 
   // 新建一篇博客
   if (method == 'POST' && path == '/api/blog/new') {
-    return {
-      msg: '这是新建博客的接口'
-    };
+    const data = newBlog(req.body);
+    return new SuccessModal(data);
   }
 
   // 删除一篇博客

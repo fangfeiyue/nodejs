@@ -2,31 +2,57 @@ const querystring = require('querystring');
 const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
 
+const getPostData = (req) => {
+  return new Promise((resolve, reject) => {
+    let postData = '';
+
+    if (req.method != 'POST' || req.headers['content-type'] !== 'application/json') {
+      resolve({});
+      return;
+    }
+
+    req.on('data', chunk => {
+      postData += chunk.toString();
+    });
+
+    req.on('end', () => {
+      if (!postData) {
+        resolve({});
+        return;
+      }
+
+      resolve(JSON.stringify(postData));
+    });
+  });
+};
+
 const serverHandle = (req, res) => {
   res.setHeader('Content-type', 'application/json');
 
   // 解析query
   req.query = querystring.parse(req.url.split('?')[1]);
 
-  // blog路由
-  const blogData = handleBlogRouter(req, res);
+  // 处理post data
+  getPostData(req).then(postData => {
+    // blog路由
+    const blogData = handleBlogRouter(req, res);
+    if (blogData) {
+      res.end(JSON.stringify(blogData));
+      return;
+    }
 
-  if (blogData) {
-    res.end(JSON.stringify(blogData));
-    return;
-  }
+    // user路由
+    const userData = handleUserRouter(req, res);
+    if (userData) {
+      res.end(JSON.stringify(userData));
+      return;
+    }
 
-  // user路由
-  const userData = handleUserRouter(req, res);
-  if (userData) {
-    res.end(JSON.stringify(userData));
-    return;
-  }
-
-  // 未命中路由，返回404
-  res.writeHead(404, {"Content-type": "text/plain"});
-  res.write("404 Not Found\n");
-  res.end();
+    // 未命中路由，返回404
+    res.writeHead(404, { "Content-type": "text/plain" });
+    res.write("404 Not Found\n");
+    res.end();
+  });
 };
 
 module.exports = serverHandle;
