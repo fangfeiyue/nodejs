@@ -27,7 +27,8 @@ const newBlog = (blogData = {})=> {
   };
 };
 
-const updateBlog = (id) => {
+const updateBlog = (id, blogData = {}) => {
+  console.log('update ....', id, blogData);
   return true;
 };
 
@@ -40,4 +41,5 @@ module.exports = {
   delBlog,
   newBlog,
   getDetail,
+  updateBlog
 };

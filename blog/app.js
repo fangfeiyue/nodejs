@@ -35,6 +35,7 @@ const serverHandle = (req, res) => {
   // 处理post data
   getPostData(req).then(postData => {
     // blog路由
+    req.body = JSON.parse(postData);
     const blogData = handleBlogRouter(req, res);
     if (blogData) {
       res.end(JSON.stringify(blogData));
