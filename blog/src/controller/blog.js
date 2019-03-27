@@ -27,8 +27,17 @@ const newBlog = (blogData = {})=> {
   };
 };
 
+const updateBlog = (id) => {
+  return true;
+};
+
+const delBlog = (id) => {
+  return true;
+};
+
 module.exports = {
   getList,
-  getDetail,
+  delBlog,
   newBlog,
+  getDetail,
 };
