@@ -53,6 +53,36 @@ server接收到http请求处理并返回
 
 客户端接收到返回数据，处理数据（如渲染页面，执行js）
 
+## 数据库的基本操作
+
+show tables;
+insert into users(username,`password`, realname) values('lisi', '123', '李四');
+select * from users;
+select id, username from users;
+select * from users where username='zhangsan';
+select * from users where username='zhangsan' and `password`='123';
+select * from users where username='zhangsan' or `password`='123';
+select * from users where username like '%zhang%';
+select * from users where `password` like '%1%' order by id;
+select * from users where `password` like '%1%' order by id desc;
+
+update users set realname='李四2' where username='lisi';更新内容时报错，错误信息如下：
+
+```
+update users set realname='李四2' where username='lisi'	Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.	0.0020 sec
+```
+解决办法，执行如下语句SET SQL_SAFE_UPDATES=0;
+
+删除某条数据
+delete from users where username='lisi'
+
+
+软删除
+
+查询版本
+select version();
+
+
 
 
 
