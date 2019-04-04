@@ -20,7 +20,7 @@ const getPostData = (req) => {
         return;
       }
 
-      resolve(postData);
+      resolve(JSON.parse(postData));
     });
   });
 };
@@ -31,12 +31,11 @@ const serverHandle = (req, res) => {
   // 解析query
   req.query = querystring.parse(req.url.split('?')[1]);
   // 处理post data
+  // res.end('hello world');
   getPostData(req).then(postData => {
     // blog路由
-    req.body = JSON.parse(postData);
-    // req.body = postData;
-
-
+    req.body = postData;
+    
     const blogResult = handleBlogRouter(req, res);
     if (blogResult) {
       blogResult.then(data => {
@@ -62,6 +61,7 @@ const serverHandle = (req, res) => {
     res.write("404 Not Found\n");
     res.end();
   }).catch(err => {
+    console.log(err);
   });
 };
 module.exports = serverHandle;
