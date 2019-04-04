@@ -37,8 +37,13 @@ const handleBlogRouter = (req, res) => {
 
   // 新建一篇博客
   if (method == 'POST' && path == '/api/blog/new') {
-    const data = newBlog(req.body);
-    return new SuccessModal(data);
+    // const data = newBlog(req.body);
+    // return new SuccessModal(data);
+    req.body.author = 'fang';
+    console.log('req',req.body)
+    return newBlog(req.body).then(data => {
+      return new SuccessModal(data);
+    });
   }
 
   // 更新一篇博客
