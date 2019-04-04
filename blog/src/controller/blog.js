@@ -18,12 +18,10 @@ const getList = (author, keyword) => {
 };
 
 const getDetail = (id) => {
-  return {
-    id: 1,
-    title: 'a',
-    createTime: 12121212,
-    author: 'zhang'
-  };
+  const sql = `select * from blogs where id=${id}`;
+  return executeSql(sql).then(rows => {
+    return rows[0];
+  });
 };
 
 const newBlog = (blogData = {})=> {
