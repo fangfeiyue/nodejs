@@ -63,12 +63,16 @@ const handleBlogRouter = (req, res) => {
 
   // 删除一篇博客
   if (method == 'POST' && path == '/api/blog/del') {
-    const data = delBlog(id);
-    if (data) {
-      return new SuccessModal(data);
-    }else {
-      return new ErrorModel('删除博客失败');
-    }
+    // const data = delBlog(id);
+    // if (data) {
+    //   return new SuccessModal(data);
+    // }else {
+    //   return new ErrorModel('删除博客失败');
+    // }
+
+    return delBlog(id, 'fang').then(data => {
+      return data ? new SuccessModal(data) : new ErrorModel('博客删除失败');
+    });
   }
 };
 

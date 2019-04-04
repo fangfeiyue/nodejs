@@ -25,7 +25,7 @@ const newBlog = (blogData = {})=> {
   const { title, content, author } = blogData;
   const createTime = Date.now();
   const sql = `
-    insert into blogs (title, content, author, createTime) values('${title}', '${content}', '${author}', ${createTime})
+      insert into blogs (title, content, author, createTime) values('${title}', '${content}', '${author}', ${createTime})
   `;
   return executeSql(sql).then(insertData => {
     return {
@@ -48,8 +48,14 @@ const updateBlog = (id, blogData = {}) => {
   });
 };
 
-const delBlog = (id) => {
-  return true;
+const delBlog = (id, author) => {
+  const sql = `delete from blogs where id='${id}' and author='${author}'`;
+  return executeSql(sql).then(delData => {
+    if (delData.affectedRows > 0) {
+      return true;
+    }
+    return false;
+  });
 };
 
 module.exports = {
