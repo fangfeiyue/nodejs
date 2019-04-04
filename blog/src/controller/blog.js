@@ -1,15 +1,20 @@
+const { executeSql } = require('../db/mysql');
+
 const getList = (author, keyword) => {
-  return [{
-    id: 1,
-    title: 'a',
-    createTime: 12121212,
-    author: 'zhang'
-  }, {
-    id: 2,
-    title: 'a',
-    createTime: 12121212,
-    author: 'zhang'
-  }];
+  let sql = `select * from blogs where 1=1 `;
+  if (author) {
+    sql += `and author='${author}' `;
+  }
+  if (keyword) {
+    sql += `and title like '%${keyword}%'`;
+  }
+  
+  sql += 'order by createtime desc';
+  
+
+  console.log(sql)
+
+  return executeSql(sql);
 };
 
 const getDetail = (id) => {
@@ -23,7 +28,7 @@ const getDetail = (id) => {
 
 const newBlog = (blogData = {})=> {
   return {
-    id: 3
+    id: 4
   };
 };
 

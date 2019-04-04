@@ -9,5 +9,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.10"
+  }
 }

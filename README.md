@@ -79,6 +79,7 @@ delete from users where username='lisi'
 
 软删除
 
+
 查询版本
 select version();
 

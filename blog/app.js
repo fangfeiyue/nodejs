@@ -5,7 +5,6 @@ const handleUserRouter = require('./src/router/user');
 const getPostData = (req) => {
   return new Promise((resolve, reject) => {
     let postData = '';
-
     if (req.method != 'POST' || req.headers['content-type'] !== 'application/json') {
       resolve({});
       return;
@@ -21,7 +20,7 @@ const getPostData = (req) => {
         return;
       }
 
-      resolve(JSON.stringify(postData));
+      resolve(postData);
     });
   });
 };
@@ -31,16 +30,25 @@ const serverHandle = (req, res) => {
 
   // 解析query
   req.query = querystring.parse(req.url.split('?')[1]);
-
   // 处理post data
   getPostData(req).then(postData => {
     // blog路由
-    req.body = JSON.parse(postData);
-    const blogData = handleBlogRouter(req, res);
-    if (blogData) {
-      res.end(JSON.stringify(blogData));
+    // req.body = JSON.parse(postData);
+    req.body = postData;
+
+
+    const blogResult = handleBlogRouter(req, res);
+    if (blogResult) {
+      blogResult.then(data => {
+        res.end(JSON.stringify(data));
+      });
       return;
     }
+    // const blogData = handleBlogRouter(req, res);
+    // if (blogData) {
+    //   res.end(JSON.stringify(blogData));
+    //   return;
+    // }
 
     // user路由
     const userData = handleUserRouter(req, res);
@@ -53,7 +61,8 @@ const serverHandle = (req, res) => {
     res.writeHead(404, { "Content-type": "text/plain" });
     res.write("404 Not Found\n");
     res.end();
+  }).catch(err => {
+    console.log('err====>>', err);
   });
 };
-
 module.exports = serverHandle;
