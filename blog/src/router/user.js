@@ -3,7 +3,6 @@ const { ErrorModel, SuccessModal } = require('../model/resModel');
 
 const handleUserRouter = (req, res) => {
   const { method, url } = req;
-  console.log(url);
   const path = url.split('?')[0];
 
   // 登录
