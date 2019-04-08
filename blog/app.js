@@ -30,6 +30,18 @@ const serverHandle = (req, res) => {
 
   // 解析query
   req.query = querystring.parse(req.url.split('?')[1]);
+
+  // 解析cookie
+  req.cookie = {};
+  const cookieStr = req.headers.cookie || '';
+  cookieStr.split(';').forEach(element => {
+    if(!element) return;
+    const arr = element.split('=');
+    const key = arr[0];
+    const value = arr[1];
+    req.cookie[key] = value;
+  });
+  console.log('req', req.headers)
   // 处理post data
   // res.end('hello world');
   getPostData(req).then(postData => {

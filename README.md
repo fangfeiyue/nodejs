@@ -83,7 +83,31 @@ delete from users where username='lisi'
 查询版本
 select version();
 
+### Cookie
 
+存储在浏览器的一段字符串最大5kb
 
+跨域不共享
+
+格式如k1=v1因此可以存储结构化数据
+
+每次发送http请求，会将请求域的cookie一起发送给server
+
+sever可以修改cookie并返回给浏览器
+
+浏览器中可以通过js修改cookie，有限制
+
+### js操作cookie
+
+查看
+document.cookie获取cookie
+
+修改
+
+document.cookie='k1=100';
+
+注意只能累加
+
+httpOnly禁止前端修改cookie
 
 
