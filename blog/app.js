@@ -50,11 +50,19 @@ const serverHandle = (req, res) => {
     // }
 
     // user路由
-    const userData = handleUserRouter(req, res);
-    if (userData) {
-      res.end(JSON.stringify(userData));
+    // const userData = handleUserRouter(req, res);
+    // if (userData) {
+    //   res.end(JSON.stringify(userData));
+    //   return;
+    // }
+
+    // user路由promise写法
+    handleUserRouter(req, res).then(userData => {
+      if (userData){
+        res.end(JSON.stringify(userData));
+      }
       return;
-    }
+    });
 
     // 未命中路由，返回404
     res.writeHead(404, { "Content-type": "text/plain" });

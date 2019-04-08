@@ -7,12 +7,22 @@ const handleUserRouter = (req, res) => {
 
   // 登录
   if (method == 'POST' && path == '/api/user/login') {
-    const data = loginCheck();
-    if (data) {
-      return new SuccessModal(data);
-    }else {
-      return new ErrorModel('登录失败');
-    }
+    // const data = loginCheck();
+    // if (data) {
+    //   return new SuccessModal(data);
+    // }else {
+    //   return new ErrorModel('登录失败');
+    // }
+
+    // promise
+    const { username, password } = req.body;
+    return loginCheck(username, password).then(data => {
+      if (data) {
+        return new SuccessModal(data);
+      }else {
+        return new ErrorModel('用户登录失败');
+      }
+    });
   }
 };
 
