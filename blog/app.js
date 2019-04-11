@@ -2,6 +2,33 @@ const querystring = require('querystring');
 const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
 
+let SESSION_DATA = {};
+
+const parseSession = (userId) => {
+  if (userId){
+    if (!SESSION_DATA[userId]) {
+      SESSION_DATA[userId] = {};
+    } 
+  } else {
+    userId = `${Date.now()}_${Math.random()}`;
+    SESSION_DATA[userId] = {}
+  }
+  return SESSION_DATA[userId];
+};
+
+const parseCookie = (cookieStr='') => {
+  cookie = {};
+  cookieStr.split(';').forEach(element => {
+    if(!element) return;
+    const arr = element.split('=');
+    const key = arr[0].trim();
+    const value = arr[1].trim();
+    cookie[key] = value;
+  });
+
+  return cookie;
+};
+
 const getPostData = (req) => {
   return new Promise((resolve, reject) => {
     let postData = '';
@@ -32,15 +59,11 @@ const serverHandle = (req, res) => {
   req.query = querystring.parse(req.url.split('?')[1]);
 
   // 解析cookie
-  req.cookie = {};
-  const cookieStr = req.headers.cookie || '';
-  cookieStr.split(';').forEach(element => {
-    if(!element) return;
-    const arr = element.split('=');
-    const key = arr[0].trim();
-    const value = arr[1].trim();
-    req.cookie[key] = value;
-  });
+  req.cookie = parseCookie(req.headers.cookie);
+
+  // 解析session
+  req.session = parseSession(req.cookie.userid);
+
   // 处理post data
   // res.end('hello world');
   getPostData(req).then(postData => {
