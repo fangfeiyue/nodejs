@@ -33,7 +33,9 @@ const handleUserRouter = (req, res) => {
     const { username } = req.cookie;
     if (username){
       return Promise.resolve(
-        new SuccessModal('登录验证成功')
+        new SuccessModal(
+          username
+        )
       );
     }
     return Promise.resolve(

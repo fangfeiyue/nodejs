@@ -37,11 +37,10 @@ const serverHandle = (req, res) => {
   cookieStr.split(';').forEach(element => {
     if(!element) return;
     const arr = element.split('=');
-    const key = arr[0];
-    const value = arr[1];
+    const key = arr[0].trim();
+    const value = arr[1].trim();
     req.cookie[key] = value;
   });
-  console.log('req', req.headers)
   // 处理post data
   // res.end('hello world');
   getPostData(req).then(postData => {
