@@ -6,7 +6,7 @@ const handleUserRouter = (req, res) => {
   const path = url.split('?')[0];
 
   // 登录
-  if (method == 'POST' && path == '/api/user/login') {
+  if (method == 'GET' && path == '/api/user/login') {
     // const data = loginCheck();
     // if (data) {
     //   return new SuccessModal(data);
@@ -15,19 +15,20 @@ const handleUserRouter = (req, res) => {
     // }
 
     // promise
-    const { username, password } = req.body;
+    // const { username, password } = req.body;
+    const { username, password } = req.query;
     return loginCheck(username, password).then(data => {
       if (data) {
         // 设置cookie httpOnly不允许前端更改cookie
         res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly`);
-
+        console.log(method, path, data);
         return new SuccessModal(data);
       }else {
         return new ErrorModel('用户登录失败');
       }
     });
   }
-  console.log('path',path);
+
   if (method == 'GET' && path == '/api/user/login-test') {
     const { username } = req.cookie;
     if (username){
