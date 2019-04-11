@@ -1,10 +1,15 @@
 const { loginCheck } = require('../controller/user');
 const { ErrorModel, SuccessModal } = require('../model/resModel');
 
+const setCookieExpires = () => {
+  const d = new Date();
+  d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
+  return d.toGMTString();
+};
+
 const handleUserRouter = (req, res) => {
   const { method, url } = req;
   const path = url.split('?')[0];
-
   // 登录
   if (method == 'GET' && path == '/api/user/login') {
     // const data = loginCheck();
@@ -20,7 +25,7 @@ const handleUserRouter = (req, res) => {
     return loginCheck(username, password).then(data => {
       if (data) {
         // 设置cookie httpOnly不允许前端更改cookie
-        res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly`);
+        res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
         console.log(method, path, data);
         return new SuccessModal(data);
       }else {
