@@ -3,6 +3,7 @@ const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
 
 let SESSION_DATA = {};
+let needSetCookie = false;
 
 const setCookieExpires = () => {
   const d = new Date();
@@ -11,29 +12,17 @@ const setCookieExpires = () => {
 };
 
 const parseSession = (userId) => {
-  // if (userId){
-  //   if (!SESSION_DATA[userId]) {
-  //     SESSION_DATA[userId] = {};
-  //   } 
-  // } else {
-  //   userId = `${Date.now()}_${Math.random()}`;
-  //   console.log('userid ', userId);
-  //   SESSION_DATA[userId] = {}
-  // }
-  // return SESSION_DATA[userId];
-
   if (!SESSION_DATA[userId]) {
+    needSetCookie = true;
     SESSION_DATA[userId] = {};
+  }else {
+    needSetCookie = false;
   }
   return SESSION_DATA[userId];
 };
 
-const isSetCookie = (userId) => {
-  if (!userId) return true;
-  return false;
-};
-
 const setCookie = (res, userId) => {
+  console.log('正在设置cookie', needSetCookie, SESSION_DATA[userId]);
   res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${setCookieExpires()}`);
 };
 
@@ -84,7 +73,6 @@ const serverHandle = (req, res) => {
 
   // 解析session
   const userId = req.cookie.userid || `${Date.now()}_${Math.random()}`;
-  console.log('userId ', req.cookie.userid, `${Date.now()}_${Math.random()}`)
   req.session = parseSession(userId);
 
   // 处理post data
@@ -96,7 +84,7 @@ const serverHandle = (req, res) => {
     const blogResult = handleBlogRouter(req, res);
     if (blogResult) {
       blogResult.then(data => {
-        if (isSetCookie()) setCookie(res, userId);
+        if (needSetCookie) setCookie(res, userId);
 
         res.end(JSON.stringify(data));
       });
@@ -119,7 +107,7 @@ const serverHandle = (req, res) => {
     const userResult = handleUserRouter(req, res);
     if (userResult) {
       userResult.then(userData => {
-        if (isSetCookie()) setCookie(res, userId);
+        if (needSetCookie) setCookie(res, userId);
 
         if (userData){
           res.end(JSON.stringify(userData));

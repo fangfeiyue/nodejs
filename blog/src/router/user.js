@@ -26,6 +26,8 @@ const handleUserRouter = (req, res) => {
       if (data) {
         // 设置cookie httpOnly不允许前端更改cookie
         // res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
+        req.session.username = data.username;
+        req.session.realname = data.realname;
         
         return new SuccessModal(data);
       }else {
@@ -35,7 +37,8 @@ const handleUserRouter = (req, res) => {
   }
 
   if (method == 'GET' && path == '/api/user/login-test') {
-    const { username } = req.cookie;
+    // const { username } = req.cookie;
+    const { username } = req.session;
     if (username){
       return Promise.resolve(
         new SuccessModal(
