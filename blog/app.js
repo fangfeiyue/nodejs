@@ -4,16 +4,37 @@ const handleUserRouter = require('./src/router/user');
 
 let SESSION_DATA = {};
 
+const setCookieExpires = () => {
+  const d = new Date();
+  d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
+  return d.toGMTString();
+};
+
 const parseSession = (userId) => {
-  if (userId){
-    if (!SESSION_DATA[userId]) {
-      SESSION_DATA[userId] = {};
-    } 
-  } else {
-    userId = `${Date.now()}_${Math.random()}`;
-    SESSION_DATA[userId] = {}
+  // if (userId){
+  //   if (!SESSION_DATA[userId]) {
+  //     SESSION_DATA[userId] = {};
+  //   } 
+  // } else {
+  //   userId = `${Date.now()}_${Math.random()}`;
+  //   console.log('userid ', userId);
+  //   SESSION_DATA[userId] = {}
+  // }
+  // return SESSION_DATA[userId];
+
+  if (!SESSION_DATA[userId]) {
+    SESSION_DATA[userId] = {};
   }
   return SESSION_DATA[userId];
+};
+
+const isSetCookie = (userId) => {
+  if (!userId) return true;
+  return false;
+};
+
+const setCookie = (res, userId) => {
+  res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${setCookieExpires()}`);
 };
 
 const parseCookie = (cookieStr='') => {
@@ -62,7 +83,9 @@ const serverHandle = (req, res) => {
   req.cookie = parseCookie(req.headers.cookie);
 
   // 解析session
-  req.session = parseSession(req.cookie.userid);
+  const userId = req.cookie.userid || `${Date.now()}_${Math.random()}`;
+  console.log('userId ', req.cookie.userid, `${Date.now()}_${Math.random()}`)
+  req.session = parseSession(userId);
 
   // 处理post data
   // res.end('hello world');
@@ -73,6 +96,8 @@ const serverHandle = (req, res) => {
     const blogResult = handleBlogRouter(req, res);
     if (blogResult) {
       blogResult.then(data => {
+        if (isSetCookie()) setCookie(res, userId);
+
         res.end(JSON.stringify(data));
       });
       return;
@@ -94,6 +119,8 @@ const serverHandle = (req, res) => {
     const userResult = handleUserRouter(req, res);
     if (userResult) {
       userResult.then(userData => {
+        if (isSetCookie()) setCookie(res, userId);
+
         if (userData){
           res.end(JSON.stringify(userData));
         }

@@ -25,8 +25,8 @@ const handleUserRouter = (req, res) => {
     return loginCheck(username, password).then(data => {
       if (data) {
         // 设置cookie httpOnly不允许前端更改cookie
-        res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
-        console.log(method, path, data);
+        // res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
+        
         return new SuccessModal(data);
       }else {
         return new ErrorModel('用户登录失败');
