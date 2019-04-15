@@ -41,9 +41,9 @@ const handleUserRouter = (req, res) => {
     const { username } = req.session;
     if (username){
       return Promise.resolve(
-        new SuccessModal(
-          username
-        )
+        new SuccessModal({
+          session: req.session
+        })
       );
     }
     return Promise.resolve(

@@ -22,7 +22,6 @@ const parseSession = (userId) => {
 };
 
 const setCookie = (res, userId) => {
-  console.log('正在设置cookie', needSetCookie, SESSION_DATA[userId]);
   res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${setCookieExpires()}`);
 };
 
