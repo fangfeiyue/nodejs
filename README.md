@@ -110,4 +110,88 @@ document.cookie='k1=100';
 
 httpOnly禁止前端修改cookie
 
+## 从session到redis
+
+1.进程内存有限，访问量国大，内存暴增怎么办？
+
+2.正式线上运行是多进程，进程之间内存无法共享
+
+cookie、session的区别：
+
+1.cookie数据存放在客户的浏览器上，session数据放在服务器上。
+
+2.cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session。
+
+3.session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面，应当使用COOKIE。
+
+4.单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。
+
+5.所以建议：将登陆信息等重要信息存放为session、其他信息如果需要保留，可以放在cookie中
+
+
+redis
+
+webserver最常用的缓存数据库，数据存放在内存中
+
+相比mysql访问速度快
+
+但是成本更高，可存储的数据量更小
+
+将webserver和redis拆分为两个单独的服务
+
+双方都是独立的，都是可以扩展的，例如都扩展成集群
+
+为什么session适用于redis？
+
+session访问频繁，对性能要求极高
+
+session可不考虑断电丢失数据的问题
+
+sesssion数据量不会太大
+
+安装
+
+```
+brew install redis
+```
+
+启动
+```
+redis-server
+redis-cli
+```
+
+### nodejs连接redis
+
+`npm i redis -S`
+
+```
+// index.js
+
+var redis = require("redis"),
+    client = redis.createClient();
+
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
+
+client.set('myName', 'FangFeiyue', redis.print);
+client.get('myName', (err, val) => {
+  if (err) {
+    console.log(err)
+    return;
+  }
+
+  console.log('val', val);
+  
+  client.quit();
+});
+```
+
+node index.js
+
+
+
+
+
 
