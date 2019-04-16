@@ -211,5 +211,14 @@ node index.js
 
 mac下nginx路径/usr/local/etc/nginx/nginx.conf
 
+## 日志
+
+访问日志 - access log
+
+自定义日志（包括自定义事件、错误记录等）
+
+日志要存储到文件中？为何不存储到mysql中，为何不存储到redis中？
+
+
 
 
