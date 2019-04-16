@@ -1,5 +1,6 @@
 const { loginCheck } = require('../controller/user');
 const { ErrorModel, SuccessModal } = require('../model/resModel');
+const { setRedisValue } = require('../db/redis');
 
 const setCookieExpires = () => {
   const d = new Date();
@@ -29,6 +30,8 @@ const handleUserRouter = (req, res) => {
         req.session.username = data.username;
         req.session.realname = data.realname;
         
+        setRedisValue(req.sessionId, req.session);
+
         return new SuccessModal(data);
       }else {
         return new ErrorModel('用户登录失败');

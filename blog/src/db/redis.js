@@ -20,7 +20,7 @@ function getRedisValue(key) {
         return;
       }
 
-      if (val == null) {
+      if (value == null) {
         resolve(null);
         return;
       }

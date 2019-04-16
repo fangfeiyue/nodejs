@@ -1,9 +1,23 @@
 const querystring = require('querystring');
 const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
+const { setRedisValue, getRedisValue } = require('./src/db/redis');
 
 let SESSION_DATA = {};
 let needSetCookie = false;
+
+const parseRedis = (userId) => {
+  return getRedisValue(userId).then(res => {
+    if (!res) {
+      needSetCookie = true;
+      setRedisValue(userId, {});
+      return {};
+    }else {
+      needSetCookie = false;
+      return res;
+    }
+  });
+};
 
 const setCookieExpires = () => {
   const d = new Date();
@@ -72,11 +86,24 @@ const serverHandle = (req, res) => {
 
   // 解析session
   const userId = req.cookie.userid || `${Date.now()}_${Math.random()}`;
-  req.session = parseSession(userId);
+  req.sessionId = userId;
+  console.log('req.sessionId', req.sessionId);
+  
+  // 用redis代替了session
+  // req.session = parseSession(userId);
+
+  parseRedis(userId).then(sessionData => {
+    req.session = sessionData;
+    
+    return getPostData(req);
+  }).
+
+  // req.session = parseRedis(userId);
 
   // 处理post data
   // res.end('hello world');
-  getPostData(req).then(postData => {
+  // getPostData(req).
+  then(postData => {
     // blog路由
     req.body = postData;
     
