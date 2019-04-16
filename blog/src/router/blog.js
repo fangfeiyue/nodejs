@@ -9,6 +9,7 @@ const { ErrorModel, SuccessModal } = require('../model/resModel');
 
 const loginCheck = (req) => {
   const { username } = req.session;
+  console.log('username', username);
   if (!username){
     return Promise.resolve(
       new ErrorModel('未登录')
@@ -23,7 +24,19 @@ const handleBlogRouter = (req, res) => {
 
   // 获取博客列表
   if (method == 'GET' && path == "/api/blog/list") {
-    const { author, keyword } = req.query;
+    let { author, keyword, isAdmin } = req.query;
+
+    if (isAdmin) {
+      // 管理员界面
+      const loginCheckResult = loginCheck(req);
+      if (loginCheckResult) {
+        return loginCheckResult;
+      }
+
+      // 强制查询自己的博客
+      author = req.session.username;
+    }
+
     return getList(author, keyword).then(listData => {
       return new SuccessModal(listData);
     });
@@ -38,10 +51,12 @@ const handleBlogRouter = (req, res) => {
     // const detailData = getDetail(id);
     // return new SuccessModal(detailData);
 
-    if (loginCheck(req)) return;
+    // const loginCheckResult = loginCheck(req);
+    // if (loginCheckResult) {
+    //   return loginCheckResult;
+    // }
 
     return getDetail(id).then(data => {
-      console.log('data===>', data)
       return new SuccessModal(data);
     });
   }
@@ -51,7 +66,10 @@ const handleBlogRouter = (req, res) => {
     // const data = newBlog(req.body);
     // return new SuccessModal(data);
 
-    if (loginCheck(req)) return;
+    const loginCheckResult = loginCheck(req);
+    if (loginCheckResult) {
+      return loginCheckResult;
+    }
     
     req.body.author = req.session.username;
     console.log('req',req.body)
@@ -70,7 +88,10 @@ const handleBlogRouter = (req, res) => {
     //   return new ErrorModel('博客更新失败');
     // }
 
-    if (loginCheck(req)) return;
+    const loginCheckResult = loginCheck(req);
+    if (loginCheckResult) {
+      return loginCheckResult;
+    }
 
     return updateBlog(id, req.body).then(data => {
       return data ? new SuccessModal(data) : new ErrorModel('博客更新失败');
@@ -85,7 +106,11 @@ const handleBlogRouter = (req, res) => {
     // }else {
     //   return new ErrorModel('删除博客失败');
     // }
-    if (loginCheck(req)) return;
+
+    const loginCheckResult = loginCheck(req);
+    if (loginCheckResult) {
+      return loginCheckResult;
+    }
 
     return delBlog(id, req.session.username).then(data => {
       return data ? new SuccessModal(data) : new ErrorModel('博客删除失败');

@@ -29,7 +29,7 @@ const handleUserRouter = (req, res) => {
         // res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
         req.session.username = data.username;
         req.session.realname = data.realname;
-        
+
         setRedisValue(req.sessionId, req.session);
 
         return new SuccessModal(data);

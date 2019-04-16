@@ -190,8 +190,26 @@ client.get('myName', (err, val) => {
 
 node index.js
 
+### ngix
+
+高性能的web服务器，开源免费
+
+一般用于做静态服务、负载均衡
+
+反向代理
+
+简单使用
+
+测试配置文件格式是否正确 `ngix -t`
+
+启动nginx  `nginx`
+
+重启nginx `nginx -s reload`
+
+停止nginx `nginx -s stop`
 
 
+mac下nginx路径/usr/local/etc/nginx/nginx.conf
 
 
 
