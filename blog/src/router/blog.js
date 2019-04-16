@@ -7,6 +7,15 @@ const {
 } = require('../controller/blog');
 const { ErrorModel, SuccessModal } = require('../model/resModel');
 
+const loginCheck = (req) => {
+  const { username } = req.session;
+  if (!username){
+    return Promise.resolve(
+      new ErrorModel('未登录')
+    );
+  }
+};
+
 const handleBlogRouter = (req, res) => {
   const { method, url } = req;
   const id = req.query.id;
@@ -29,6 +38,8 @@ const handleBlogRouter = (req, res) => {
     // const detailData = getDetail(id);
     // return new SuccessModal(detailData);
 
+    if (loginCheck(req)) return;
+
     return getDetail(id).then(data => {
       console.log('data===>', data)
       return new SuccessModal(data);
@@ -39,7 +50,10 @@ const handleBlogRouter = (req, res) => {
   if (method == 'POST' && path == '/api/blog/new') {
     // const data = newBlog(req.body);
     // return new SuccessModal(data);
-    req.body.author = 'fang';
+
+    if (loginCheck(req)) return;
+    
+    req.body.author = req.session.username;
     console.log('req',req.body)
     return newBlog(req.body).then(data => {
       return new SuccessModal(data);
@@ -56,6 +70,8 @@ const handleBlogRouter = (req, res) => {
     //   return new ErrorModel('博客更新失败');
     // }
 
+    if (loginCheck(req)) return;
+
     return updateBlog(id, req.body).then(data => {
       return data ? new SuccessModal(data) : new ErrorModel('博客更新失败');
     })
@@ -69,8 +85,9 @@ const handleBlogRouter = (req, res) => {
     // }else {
     //   return new ErrorModel('删除博客失败');
     // }
+    if (loginCheck(req)) return;
 
-    return delBlog(id, 'fang').then(data => {
+    return delBlog(id, req.session.username).then(data => {
       return data ? new SuccessModal(data) : new ErrorModel('博客删除失败');
     });
   }

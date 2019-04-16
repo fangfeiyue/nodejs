@@ -12,7 +12,7 @@ const handleUserRouter = (req, res) => {
   const { method, url } = req;
   const path = url.split('?')[0];
   // 登录
-  if (method == 'GET' && path == '/api/user/login') {
+  if (method == 'POST' && path == '/api/user/login') {
     // const data = loginCheck();
     // if (data) {
     //   return new SuccessModal(data);
@@ -21,8 +21,8 @@ const handleUserRouter = (req, res) => {
     // }
 
     // promise
-    // const { username, password } = req.body;
-    const { username, password } = req.query;
+    const { username, password } = req.body;
+    // const { username, password } = req.query;
     return loginCheck(username, password).then(data => {
       if (data) {
         // 设置cookie httpOnly不允许前端更改cookie
@@ -39,20 +39,20 @@ const handleUserRouter = (req, res) => {
     });
   }
 
-  if (method == 'GET' && path == '/api/user/login-test') {
-    // const { username } = req.cookie;
-    const { username } = req.session;
-    if (username){
-      return Promise.resolve(
-        new SuccessModal({
-          session: req.session
-        })
-      );
-    }
-    return Promise.resolve(
-      new ErrorModel('登录验证失败')
-    );
-  }
+  // if (method == 'GET' && path == '/api/user/login-test') {
+  //   // const { username } = req.cookie;
+  //   const { username } = req.session;
+  //   if (username){
+  //     return Promise.resolve(
+  //       new SuccessModal({
+  //         session: req.session
+  //       })
+  //     );
+  //   }
+  //   return Promise.resolve(
+  //     new ErrorModel('登录验证失败')
+  //   );
+  // }
 };
 
 module.exports = handleUserRouter;
