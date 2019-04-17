@@ -16,6 +16,7 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "xss": "^1.0.6"
   }
 }
