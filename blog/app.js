@@ -1,6 +1,7 @@
 const querystring = require('querystring');
 const handleBlogRouter = require('./src/router/blog');
 const handleUserRouter = require('./src/router/user');
+const { writeAcessLog } = require('./src/utils/log');
 const { setRedisValue, getRedisValue } = require('./src/db/redis');
 
 let SESSION_DATA = {};
@@ -76,6 +77,9 @@ const getPostData = (req) => {
 };
 
 const serverHandle = (req, res) => {
+  // 记录access-log
+  writeAcessLog(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`);
+
   res.setHeader('Content-type', 'application/json');
 
   // 解析query
