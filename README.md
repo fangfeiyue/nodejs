@@ -223,7 +223,7 @@ mac下nginx路径/usr/local/etc/nginx/nginx.conf
 
 ## 安全
 
-sql注入
+### sql注入
 
 例子：登录sql注入
 
@@ -233,6 +233,20 @@ zhangsan';delete from users; --
 
 
 mysql.escape(zhangsan' --  );
+
+### xss攻击
+
+攻击方式：在页面展示内容中掺杂js代码，以获取网页信息
+
+预防措施：转换生成js的特殊字符
+
+```
+npm i xss -S
+
+const xss = reqiure('xss');
+
+const inputContent = xss(inputData);
+```
 
 
 
