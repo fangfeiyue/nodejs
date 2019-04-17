@@ -24,12 +24,12 @@ const handleUserRouter = (req, res) => {
     const { username, password } = req.body;
     // const { username, password } = req.query;
     return loginCheck(username, password).then(data => {
-      if (data) {
+      if (data.username) {
         // 设置cookie httpOnly不允许前端更改cookie
         // res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${setCookieExpires()}`);
         req.session.username = data.username;
         req.session.realname = data.realname;
-
+        
         setRedisValue(req.sessionId, req.session);
 
         return new SuccessModal(data);

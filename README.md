@@ -219,6 +219,21 @@ mac下nginx路径/usr/local/etc/nginx/nginx.conf
 
 日志要存储到文件中？为何不存储到mysql中，为何不存储到redis中？
 
+使用crontab拆分日志文件
+
+## 安全
+
+sql注入
+
+例子：登录sql注入
+
+zhangsan' -- 
+
+zhangsan';delete from users; -- 
+
+
+mysql.escape(zhangsan' --  );
+
 
 
 
