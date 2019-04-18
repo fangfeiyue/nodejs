@@ -1,3 +1,4 @@
+const { generatePassword } = require('../utils/cryp');
 const { executeSql, escape } = require('../db/mysql');
 
 const loginCheck = (userName='zhangsan', password='123') => {
@@ -8,9 +9,9 @@ const loginCheck = (userName='zhangsan', password='123') => {
   // return false;
 
   userName = escape(userName);
-  password = escape(password);
+  password = generatePassword(escape(password));
 
-  const sql = `select username, realname from users where username=${userName} and password=${password}`;
+  const sql = `select username, realname from users where username=${userName} and password='${password}'`;
   
   console.log(sql)
 

@@ -248,6 +248,5 @@ const xss = reqiure('xss');
 const inputContent = xss(inputData);
 ```
 
-
-
+### 密码加密
 
