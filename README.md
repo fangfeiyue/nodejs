@@ -250,3 +250,12 @@ const inputContent = xss(inputData);
 
 ### 密码加密
 
+```
+
+```
+
+ asyn await要点
+ 1.await后面可以追加promise对象，获取resolve的值
+ 2.await必须包裹在async函数里面
+ 3.async函数执行返回的也是一个promise对象
+ 4.try-catch截获promise中reject的值
