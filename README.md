@@ -253,9 +253,35 @@ const inputContent = xss(inputData);
 ```
 
 ```
-
  asyn await要点
  1.await后面可以追加promise对象，获取resolve的值
  2.await必须包裹在async函数里面
  3.async函数执行返回的也是一个promise对象
  4.try-catch截获promise中reject的值
+
+## koa2
+
+npm i koa-generator -D
+
+koa2 blog-koa2
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 问题
+
+在使用mysql执行update的时候，如果不是用主键当where语句，会报如下错误，使用主键用于where语句中正常。
+
+异常内容：Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -> SQL Queries and reconnect.
+
+
+这是因为MySql运行在safe-updates模式下，该模式会导致非主键条件下无法执行update或者delete命令，执行命令SET SQL_SAFE_UPDATES = 0;修改下数据库模式
