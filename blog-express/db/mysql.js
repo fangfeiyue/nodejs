@@ -1,18 +1,13 @@
 const mysql      = require('mysql');
 const { MYSQL_CONFIG } = require('../config/db');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'me',
-  password : 'secret',
-  database : 'my_db'
-});
+const connection = mysql.createConnection(MYSQL_CONFIG);
  
-connection.connect(MYSQL_CONFIG);
+connection.connect();
 
 function executeSql(sql) {
   return new Promise((resolve, reject) => {
     connection.query(sql, (err, res) => {
-      if (error) {
+      if (err) {
         reject(err);
         return;
       }

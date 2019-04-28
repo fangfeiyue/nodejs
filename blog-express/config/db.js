@@ -1,4 +1,4 @@
-const MYSQL_CONFIG = null;
+let MYSQL_CONFIG = null;
 const env = process.env.NODE_ENV;
 
 
