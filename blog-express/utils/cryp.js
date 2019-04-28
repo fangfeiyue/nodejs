@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const SECRET_KEY = 'JLsdkjl?W324fadsfLKJsdfP:E|}345}ad2s4fas1323';
+const SECRET_KEY = 'wJLJKe2lk2JLJ34334lk2hg2i4p';
 
 function md5(content) {
   return crypto.createHash('md5').update(content).digest('hex');

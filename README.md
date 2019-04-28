@@ -266,7 +266,9 @@ npm i koa-generator -D
 koa2 blog-koa2
 
 
+### express处理session
 
+使用express-session和connect-redis
 
 
 
