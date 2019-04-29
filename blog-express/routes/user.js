@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { loginCheck } = require('../controller/user');
+const { login } = require('../controller/user');
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 
 router.post('/login', async function (req, res, next) {
@@ -19,7 +19,7 @@ router.post('/login', async function (req, res, next) {
   //   );
   // });
 
-  const data = await loginCheck(username, password);
+  const data = await login(username, password);
   if (data.username) {
     req.session.username = data.username;
     req.session.realname = data.realname;
