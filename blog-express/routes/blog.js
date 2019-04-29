@@ -7,6 +7,7 @@ const {
   getDetail,
   updateBlog,
 } = require('../controller/blog');
+const loginCheck = require('../middleware/loginCheck');
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 
 router.get('/list', function (req, res, next) {
@@ -33,11 +34,18 @@ router.get('/list', function (req, res, next) {
 });
 
 // 博客详情
-router.get('/detail', async function(req, res, nex) {
-  const result = await getDetail(req.query.id);
+router.get('/detail', async function(req, res, next) {
   res.json(
-    new SuccessModel(result)
+    new SuccessModel(await getDetail(req.query.id))
   );
+});
+
+// 新建博客
+router.post('/new', loginCheck, async function(req, res, next) {
+  req.body.author = req.session.username;
+  res.json(
+    new SuccessModel(await newBlog(req.body))
+  )
 });
 
 module.exports = router;
