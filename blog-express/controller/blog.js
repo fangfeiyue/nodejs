@@ -30,6 +30,7 @@ const newBlog = async (blogData = {}) => {
 };
 
 const updateBlog = async (id, blogData = {}) => {
+  const { title, content } = blogData;
   const sql = `update blogs set title='${title}', content='${content}' where id='${id}'`;
   return (await executeSql(sql)).affectedRows > 0 ? true : false;
 };

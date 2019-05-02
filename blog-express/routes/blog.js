@@ -48,4 +48,14 @@ router.post('/new', loginCheck, async function(req, res, next) {
   )
 });
 
+// 更新博客
+router.post('/update', loginCheck, async (req, res, next) => {
+  return await updateBlog(req.query.id, req.body) ? new SuccessModel('更新成功') : new ErrorModel('更新博客失败');
+});
+
+// 删除博客
+router.post('/del', loginCheck, async function(req, res, next) {
+
+})
+
 module.exports = router;
