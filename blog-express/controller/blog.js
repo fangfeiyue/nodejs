@@ -36,7 +36,7 @@ const updateBlog = async (id, blogData = {}) => {
 };
 
 const delBlog = async (id, author) => {
-  const sql = `delete from blogs where id='${id}' and autor='${author}'`;
+  const sql = `delete from blogs where id='${id}' and author='${author}'`;
   return (await executeSql(sql)).affectedRows > 0 ? true : false;
 };
 

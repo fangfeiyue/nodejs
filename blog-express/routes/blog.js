@@ -55,7 +55,8 @@ router.post('/update', loginCheck, async (req, res, next) => {
 
 // 删除博客
 router.post('/del', loginCheck, async function(req, res, next) {
-
+  const author = req.session.username;
+  return await delBlog(req.query.id, author) ? res.json(new SuccessModel('删除成功')) : res.json(new ErrorModel('删除失败'));
 })
 
 module.exports = router;
