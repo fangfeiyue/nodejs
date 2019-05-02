@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const fs = require('fs');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const { redisClient } = require('./db/redis');
@@ -19,7 +20,21 @@ var app = express();
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+const env = process.env.NODE_ENV;
+
+if (env != 'production') {
+  app.use(logger('dev'));
+}else {
+  // 如果文件路径不存在的话不会自动创建文件
+  const filePath = path.join(__dirname, 'logs', 'access.log');
+  const writeStream = fs.createWriteStream(filePath, {
+    flags: 'a'
+  });
+  app.use(logger('combined', {
+    stream: writeStream
+  }));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
