@@ -36,7 +36,7 @@ const sessionStore = new RedisStore({
 app.use(session({
   secret: 'sdkk24kjls46l23k?@a3#d$22',
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000
+    // maxAge: 24 * 60 * 60 * 1000
   },
   saveUninitialized: false,
   store: sessionStore

@@ -50,7 +50,7 @@ router.post('/new', loginCheck, async function(req, res, next) {
 
 // 更新博客
 router.post('/update', loginCheck, async (req, res, next) => {
-  return await updateBlog(req.query.id, req.body) ? new SuccessModel('更新成功') : new ErrorModel('更新博客失败');
+  return await updateBlog(req.query.id, req.body) ? res.json(new SuccessModel('更新成功')) : res.json(new ErrorModel('更新博客失败'));
 });
 
 // 删除博客
