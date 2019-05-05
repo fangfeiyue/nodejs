@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+    题目：
+    1.JS中使用typeof能得到哪些类型
+    2.何时使用===何时使用==
+    3.JS中有哪些内置函数
+    4.JS变量按照存储方式区分为哪些类型，并描述其特点
+    5.如何理解JSON
+
+    知识点：
+    1.变量类型
+      值类型vs引用类型
+      typeof运算符详解
+    2.变量计算
+    */
+
+    // typeof引用类型只能分辨object、function其他引用类型显示为object
+    console.log(
+      typeof undefined, // undefined
+      typeof 'abc', // string
+      typeof 123, // number
+      typeof true,  // boolean
+      typeof {},  // object
+      typeof [],  // object
+      typeof null,  //object
+      typeof console.log  //function
+    );
+
+    /*
+    类型转换
+    */
+    console.log(
+      100 + 10, // 110
+      100 + '10', // "10010" 重点
+      100 == '100', // true
+      0 == '',  // true
+      null == undefined // true
+    );
+
+    var a = true;
+    if (a) {
+      // 执行了
+    }
+
+    var b = 100;
+    if (b) {
+      // 执行了
+    }
+
+    var c = '';
+    if (c) {
+      // 没有执行
+    }
+
+    /*
+    逻辑运算符
+    */
+    console.log(
+      10 && 0,  // 0
+      '' || 'abc',  // 'abc'
+      !window.abc // true
+    )
+
+    // 判断一个变量会被当做true还是false
+    var a = 100;
+    console.log(!!a); // true
+
+    /*
+    JS中的内置函数
+    Object,
+    Array,
+    Boolean,
+    Number,
+    String,
+    Function,
+    Date,
+    RegExp,
+    Error
+    */
+
+    /* 
+    JS变量按照存储方式区分为哪些类型,并描述其特点 
+    */
+    //值类型
+    {
+      let a = 10;
+      let b = a;
+      a = 11;
+      console.log(b); // 10
+    }
+    //引用类型
+    {
+      let obj1 = { x: 100 };
+      let obj2 = obj1;
+      obj1.x = 200;
+      console.log(obj2.x); //200
+    }
+
+    /*
+    如何理解JSON？
+    JSON只不过是一个JS对象而已
+    */
+    console.log(
+      JSON.stringify({ a: 10, b: 20 }), // {"a":10,"b":20}
+      JSON.parse('{"a":10, "b":20}')  // {a: 10, b: 20}
+    );
+
+    
+  </script>
+</body>
+
+</html>
