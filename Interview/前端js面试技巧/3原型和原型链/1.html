@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    题目：
+    1.如何准确判断一个变量是数组类型
+    2.写一个原型链继承的例子
+    3.描述new一个对象的过程
+    4.zepto或其他框架源码中如何使用原型链
+    
+    知识点：
+    1.构造函数
+    2.构造函数-扩展
+    3.原型规则和示例
+    4.原型链
+    */
+
+    {
+      // 构造函数
+      function Foo(name, age) {
+        this.name = name;
+        this.age = age;
+        this.class = 'class-1';
+      }
+      const f1 = new Foo('zhangsan', 20);
+      const f2 = new Foo('zhangsan', 21);
+      console.log(f1, f2);
+    }
+
+    {
+      // 构造函数的扩展
+      /*
+        var a = {}其实是var a = new Object()的语法糖
+        var a = []其实是var a = new Array()的语法糖
+        function Foo(){}其实是var Foo = new Function()
+        使用instanceof判断一个函数是否是一个变量的构造函数
+      */
+    }
+  </script>
+</body>
+</html>
