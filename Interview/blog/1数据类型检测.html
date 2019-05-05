@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // typeof判断类型，无法准确的判断引用类型,不能判断 null、array 等,不能判断 null、array 等
+    console.log(typeof null, typeof undefined, typeof NaN, typeof new Function, typeof new Date(), typeof new RegExp(), new Array(), typeof []);
+    // object undefined number function object object [] object
+
+
+    function checkType(value) {
+      return Object.prototype.toString.call(value);
+    }
+
+    console.log(checkType(1), checkType('hello'), checkType([]), checkType(null), checkType(undefined));
+    // [object Number] [object String]
+
+    // instanceof
+    console.log(
+      [] instanceof Array, //true
+      {} instanceof Object,//true
+      new Date() instanceof Date,//true
+      new RegExp() instanceof RegExp//true
+    ); // true true true true
+
+    // 对于基本数据类型来说，字面量方式创建出来的结果和实例方式创建的是有一定的区别的
+    console.log(
+      1 instanceof Number,
+      new Number(1) instanceof Number
+    ); // false true
+
+    // console.log(
+    //   null instanceof Null,
+    //   undefined instanceof undefined
+    // );
+
+    // 对于特殊的数据类型 null 和 undefined，他们的所属类是 Null 和 Undefined，但是浏览器把这两个类保护起来了，不允许我们在外面访问使用。
+
+    // 函数的 constructor 是不稳定的，这个主要体现在把类的原型进行重写，在重写的过程中很有可能出现把之前的 constructor 给覆盖了，这样检测出来的结果就是不准确的
+    function Fn(){}
+    // Fn.prototype = new Array;
+    const f = new Fn;
+    console.log(f.constructor); // Array
+
+
+
+  </script>
+</body>
+</html>

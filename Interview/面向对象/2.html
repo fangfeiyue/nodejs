@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    {
+      // 第一种方式
+      function Parent(name) {
+        this.name = name;
+      }
+
+      Parent.prototype.say = function() {
+        console.log('hello world');
+      };
+
+      function Child(name) {
+        Parent.call(this, name);
+        this.age = 18;
+      }
+
+      const child = new Child('f');
+      console.log(child); // Child {name: "f", age: 18} 这种继承方法的缺陷是不能继承原型对象上的属性和方法
+    }
+
+    {
+      // 第二种方式
+      function Parent(name) {
+        this.name = name;
+        this.scores = {
+          math: 100
+        };
+      }
+
+      Parent.prototype.say = function() {
+        console.log('hello world');
+      };
+
+      function Child() {
+        this.age = 18;
+      }
+
+      Child.prototype = new Parent();
+
+      const child = new Child;
+      const child2 = new Child;
+
+      child.scores.math = 90;
+
+      console.log(child.scores.math); // 90
+      console.log(child2.scores.math); // 90
+      child.say();
+    }
+
+    {
+      // 第三种方式
+      function Parent() {
+        this.scores = {
+          math: 100
+        };
+      }
+
+      function Child() {
+        Parent.call(this);
+        this.age = 18;
+      }
+
+      Child.prototype = new Parent;
+
+      const child = new Child;
+      const child2 = new Child;
+ 
+      child.scores.math = 150;
+
+      console.log(child)
+      console.log(child2)
+    }
+
+    {
+      // 第四种方式
+      function Parent() {
+        this.scores = {
+          math: 100
+        };
+      }
+
+      function Child() {
+        Parent.call(this);
+        this.age = 18;
+      }
+
+      Child.prototype = Parent.prototype;
+    
+      const child = new Child;
+      const child2 = new Child;
+
+      console.log(child instanceof Parent);
+
+      child.scores.math = 150;
+
+      console.log(child.scores.math);
+      console.log(child2.scores.math);
+    }
+
+    {
+      // 第五种方式
+      function Parent() {
+        this.scores = {
+          math: 100
+        };
+      }
+
+      function Child() {
+        Parent.call(this);
+      }
+
+      Child.prototype = Object.create(Parent.prototype);
+      Child.prototype.constructor = Child;
+
+      const child = new Child;
+      
+      console.log(111,child instanceof Child, child instanceof Parent, child.constructor);
+
+      console.log(child);
+    }
+
+  </script>
+</body>
+</html>

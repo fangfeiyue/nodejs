@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="button" value="打开窗口" onclick="open_win()">
+  <script>
+    function open_win() {
+      const bWindow = window.open("http://localhost:8080");
+      bWindow.postMessage("hello there!", 'http://localhost:8080');
+    }
+  </script>
+</body>
+
+</html>
