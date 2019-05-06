@@ -43,6 +43,55 @@
         使用instanceof判断一个函数是否是一个变量的构造函数
       */
     }
+
+    {
+      // 原型规则和实例
+
+      // 1.所有的引用类型(数组、对象、函数)都具有对象特性，即可自由扩展属性(除了null之外)
+      // 2.所有的引用类型(数组、对象、函数)都有一个__proto__（隐式原型）属性，属性值是一个普通的对象
+      // 3.所有的函数都有一个prototype（显试原型）属性，属性值也是一个普通对象
+      // 4.所有的引用类型(数组、对象、函数)__proto__属性值指向它的构造函数的prototype属性值
+      // 5.当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的__proto__（即它的构造函数的prototype）中寻找。
+
+      var obj = {};
+      obj.a = 100;
+      var arr = [];
+      arr.a = 100;
+      function fn(){};
+      fn.a = 100;
+
+      console.log(obj.__proto__);
+      console.log(arr.__proto__);
+      console.log(fn.__proto__);
+      console.log(fn.prototype);
+      console.log(obj.__proto__ === Object.prototype); // true
+
+
+      function Foo(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      Foo.prototype.alertName = function () {
+        alert(this.name);
+      };
+      var f = new Foo('张三');
+      f.printName = function(){
+        console.log(this.name);
+      };
+
+      // 测试
+      f.printName();
+      // f.alertName();
+
+      // 遍历
+      for (let item in f) {
+        // 高级浏览器已经在for in中屏蔽了来自原型的属性，但是这里建议大家还是加上这个判断，保证程序的健壮性
+        if (f.hasOwnProperty(item)) {
+          console.log(item) // name, age, printName
+        }
+      }
+    }
   </script>
 </body>
 </html>
