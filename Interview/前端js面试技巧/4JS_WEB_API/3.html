@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="event">事件绑定</div>
+
+  <div id="pop">
+    <p id="p1">激活</p>
+    <p id="p2">取消</p>
+    <p id="p3">取消</p>
+    <p id="p4">取消</p>
+    <p id="p5">取消</p>
+  </div>
+  <script>
+    /*
+    事件
+
+    题目
+    1.编写一个通用的事件监听函数
+    2.描述事件冒泡流程
+    3.对于一个无限下拉加载图片的页面，如何给每个图片绑定事件
+
+    知识点：
+    1.通用事件绑定
+    2.事件冒泡
+    3.代理
+    */
+
+    // 事件监听
+    function bindEvent(el, type, fn) {
+      el.addEventListener(type, fn);
+    }
+
+    bindEvent(document.getElementById('event'), 'click', function() {
+      console.log('点击了div');
+    });
+
+    // 冒泡
+    // bindEvent(document.getElementById('p1'), 'click', function(e) {
+    //   e.stopPropagation();
+    //   console.log('激活了');
+    // })
+
+    // bindEvent(document.body, 'click', function(e) {
+    //   console.log('取消')
+    // });
+
+    // 代理
+    bindEvent(document.getElementById('pop'), 'click', function(e){
+      const target = e.target;
+      if (target.nodeName == 'P')console.log(target.innerHTML);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    BOM(Browser Object Model)操作
+
+    题目：
+    1.如何检测浏览器的类型
+    2.拆解url的各部分
+    
+    知识点:
+    1.navigator
+    2.screen
+    3.location
+    4.history
+    */
+
+    // navigator
+    const ua = navigator.userAgent;
+    const isChrome = ua.includes('Chrome');
+    console.log(isChrome);
+
+    // screen
+    console.log(
+      screen.width, // true
+      screen.height // 1680 1050
+    );
+
+    // location
+    console.log(
+      location.href,
+      location.protocol, // http:/https:
+      location.pathname, // /Interview/...
+      location.search,
+      location.hash
+    )
+
+    // history
+    // history.back();
+    // history.forward();
+
+
+  </script>
+</body>
+</html>
