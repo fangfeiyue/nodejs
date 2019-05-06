@@ -7,6 +7,10 @@
   <title>Document</title>
 </head>
 <body>
+  <p id="p2">this is p2</p>
+  <div id="div1">
+    <p>this is p</p>
+  </div>
   <script>
     /*
     回顾js基础
@@ -34,8 +38,58 @@
     ECMA262标准和W3C标准
     */
 
+    /*
+    DOM（Document Object Model）的本质
     
+    问题：
+    1.DOM是哪种基本的数据结构？
+    2.DOM操作的常用API有哪些？
+    3.DOM节点的attr和property有何区别
+    property是DOM中的属性，是JavaScript里的对象；
+    attribute是HTML标签上的特性，它的值只能够是字符串；
 
+    知识点：
+    1.DOM本质
+    DOM可以理解为浏览把拿到的html代码，结构化为一个浏览器可识别并且js可操作的一个模型
+    2.DOM节点操作
+    3.DOM结构操作
+    */
+
+    /*
+    DOM节点操作
+    */
+    const div1 = document.getElementById('div1');
+
+    // 新增节点
+    const p1 = document.createElement('p');
+    p1.innerHTML = 'this is p1';
+    div1.appendChild(p1);
+
+    // 移动节点
+    const p2 = document.getElementById('p2');
+    div1.appendChild(p2);
+
+    // 获取父元素
+    const parent = p1.parentElement;
+    console.log(parent);
+
+    // 获取子元素
+    const child = div1.childNodes;
+    // children:只包含元素节点,childNodes:包含所有类型的节点
+    console.log(child); // [text, p, text, p, p#p2]
+    console.log(div1.children); // HTMLCollection(3) [p, p, p#p2, p2: p#p2]
+
+    console.log(child[0].nodeType); // text 3
+    console.log(child[1].nodeType); // p 1
+
+    console.log(child[0].nodeName); // #text
+    console.log(child[1].nodeName); // p
+
+    // childNodes获取的不是一个数组是一个集合，不能使用数组特有的方法
+    // console.log(child.filter(item => item.nodeType != 1));
+
+    // 删除节点
+    // div1.removeChild(child[0]);
     
 
   </script>  
