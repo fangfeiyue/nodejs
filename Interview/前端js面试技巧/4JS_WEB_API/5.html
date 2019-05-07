@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      Ajax
+
+      题目：
+      1.手动编写一个ajax，不依赖第三方库
+        1.IE低版本使用ActiveXObject
+        2.readyState状态
+          1. 0(未初始化)还没有调用send()方法
+          2. 1(载入)已调用send()方法，正在发送请求
+          3. 2(载入完成)send()方法执行完成，已经接收到全部响应内容
+          4. 3(交互)正在解析响应内容
+          5. 4(完成)响应内容解析完成，可以在客户端调用了
+        3.status
+          1. 2xx - 表示成功处理请求，如200
+          2. 3xx - 需要重定向，浏览器直接跳转
+          3. 4xx - 客户端请求错误，如404
+          4. 5xx - 服务器端错误
+      2.跨域的几种实现方式
+        1.什么是跨域
+          浏览器有同源策略，不允许ajax访问其他接口，跨域条件：协议、域名、端口，有一个不同就算跨域
+
+          可以跨域的三个标签：<img src="">\<link href="">\<script src="">
+
+          三个标签的场景：
+          1.img用于打点统计，统计网站可能是其他域
+          2.link\script可以使用CDN，CDN也是其他域
+          3.script可以用于JSONP
+
+          跨域注意事项：
+          1.所有的跨域请求都必须经过信息提供方允许
+          2.如果未经允许即可获取，那是浏览器同源策略出现漏洞
+
+        2.JSONP
+          
+        3.服务器端设置http header
+        // 注意：不同后端语言的写法可能不一样
+        response.setHeader("Access-Control-Allow-Origin", "http://a.com, http://b.com");
+        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS,");
+
+        // 接收跨域的cookie
+        response.setHeader("Access-Allow-Credentials", "true");
+      知识点：
+      1.XMLHttpRequest
+      2.状态码说明
+      3.跨域
+    */
+    // 手动编写一个ajax，不依赖第三方库
+    // IE低版本使用ActiveXObject
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api', false);
+    xhr.onreadystatechange = function() {
+      // 这里的函数异步执行，可参考之前JS基础中的异步模块
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          console.log(xhr.responseText);
+        }
+      }
+    };
+    xhr.send(null);
+
+    // 
+  </script>
+</body>
+</html>
