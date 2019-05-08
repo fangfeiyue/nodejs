@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="list"></div>
+  <input type="text" id="text">
+  <script>
+    /*
+    性能优化
+
+    一、加载资源优化
+    1.静态资源的压缩合并
+    2.静态资源呢缓存
+    3.使用CDN让资源加载更快
+    4.使用SSR后端渲染，数据直接输出到HTML中
+
+    二、渲染优化
+    1.css放前面，js放后面
+    2.懒加载
+    3.减少DOM查询，对DOM查询做缓存
+    4.减少DOM操作，多个操作尽量合并在一起执行
+    5.事件节流
+    */
+
+    // 合并DOM插入
+    const listNode = document.getElementById('list');
+    const frag = document.createDocumentFragment();
+    let x, li;
+
+    for (x = 0; x < 10; x++) {
+      li = document.createElement('li');
+      li.innerHTML = 'List item ' + x;
+      frag.appendChild(li);
+    }
+
+    listNode.appendChild(frag);
+
+    // 事件节流
+    const textArea = document.getElementById('text');
+    let timeoutId;
+
+    textArea.addEventListener('keyup', () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        // 触犯change事件
+        console.log('触发了change事件')
+      }, 100);
+    });
+  </script>
+</body>
+</html>
