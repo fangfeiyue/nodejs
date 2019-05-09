@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+  <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+  <meta http-equiv="expires" content="-1">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="container">hello</div>
+  <script>
+    /*
+    题目：
+    1.说一下对变量提升的理解
+    2.说明this几种不同的使用场景
+    3.创建10个div标签，点击的时候弹出来对应的序号
+    4.如何理解作用域
+    5.实际开发中闭包的应用
+
+    知识点：
+    1.执行上下文
+    2.this -- 要在执行时才能确认值，定义时无法确认
+    3.作用域
+    4.作用域链
+    5.闭包
+    */
+
+    // 执行上下文
+    {
+      console.log(a); // undefined
+
+      // let\const不存在变量提升
+      // let a = 100; // Uncaught ReferenceError: a is not defined
+
+      var a = 100;
+
+      fn('zhangsan');
+
+      function fn(name) {
+        age = 20;
+        console.log(name, age); // zhangsna 20
+        var age;
+      }
+
+      // 函数表达式不存在变量提升
+      // foo(); // Uncaught TypeError: foo is not a function
+      var foo = function () {
+        console.log('hello')
+      };
+    }
+
+    // 创建10个div标签，点击的时候弹出来对应的序号
+    {
+      const frag = document.createDocumentFragment();
+      const container = document.getElementById('container');
+
+      for (let i = 0; i < 10; i++) {
+        let div = document.createElement('div');
+        div.onclick = function () {
+          console.log(i);
+        };
+        div.innerHTML = i;
+        frag.appendChild(div);
+      }
+
+      container.appendChild(frag);
+    }
+
+    // arguments
+    {
+      function testArg() {
+        // 可以通过arguments获取函数的参数
+        console.log('arg', arguments.length);
+      }
+
+      testArg(1, 2, 3);
+    }
+
+    // this
+    {
+      const a = {
+        name: 'A',
+        fn() {
+          console.log(this.name);
+        }
+      };
+
+      a.fn(); //A
+      a.fn.call({ name: 'B' }); //B
+      var fn1 = a.fn;
+      fn1(); // 空
+    }
+
+    {
+      // let、const声明的变量不能用window调用
+      var slice = Array.prototype.slice;
+      const arr = [1, 2, 3, 4];
+      function test() {
+        console.log('hello');
+      }
+      var name = 'fang';
+      console.log(window.name);
+      console.log(slice());
+      // console.log('slice',window.slice()); // Uncaught TypeError: window.slice is not a function
+      // console.log(slice(arr, 0));
+      // console.log(slice.call(arr, 0));
+    }
+  </script>
+</body>
+
+</html>

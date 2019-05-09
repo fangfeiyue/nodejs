@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+    call、apply、bind
+
+    这三个函数的存在意义是什么？答案是改变函数执行时的上下文，再具体一点就是改变函数运行时的this指向。
+    */
+    {
+      // 基础应用
+      function a() {
+        //输出函数a中的this对象
+        console.log(this);
+      }
+      //定义函数b
+      function b() { }
+
+      var obj = { name: '这是一个屌丝' }; //定义对象obj
+      a.call(); //window
+      a.call(null); //window
+      a.call(undefined);//window
+      a.call(1); //Number
+      a.call(''); //String
+      a.call(true); //Boolean
+      a.call(b);// function b(){}
+      a.call(obj); //Object {name: "这是一个屌丝"}
+    }
+
+    {
+      // 求数组中的最大值
+      const arr = [10, 23, 43, 5, 123, 434];
+      console.log(Math.max(...arr), Math.max.apply(null, arr)); // 434, 434
+    }
+
+    {
+      // 继承
+      function Person(name) {
+        this.name = name;
+      }
+
+      Person.prototype = {
+        constructor: Person,
+        showName() {
+          console.log(this.name);
+        }
+      };
+
+      const person = new Person('fang');
+      person.showName(); // fang
+
+      const animal = {
+        name: 'cat'
+      };
+
+      person.showName.call(animal); // cat
+      person.showName.apply(animal); // cat
+      person.showName.bind(animal)(); // cat  bind返回的是一个函数
+    }
+  </script>
+</body>
+
+</html>
