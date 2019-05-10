@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <div id="list"></div>
   <input type="text" id="text">
@@ -49,10 +51,11 @@
         clearTimeout(timeoutId);
       }
       timeoutId = setTimeout(() => {
-        // 触犯change事件
+        // 触发change事件
         console.log('触发了change事件')
-      }, 100);
+      }, 2000);
     });
   </script>
 </body>
+
 </html>
