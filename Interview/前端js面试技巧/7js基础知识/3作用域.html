@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+    作用域：
+    1.es5没有块级作用域，只有函数和全局作用域,es6有了块级作用域
+
+    作用域链：
+    当前作用域没有定义的变量，即"自由变量"
+    */
+
+    {
+      // 无块级作用域
+      if (true) {
+        var name = 'fag';
+      }
+      console.log(name);
+
+      // 函数和全局作用域
+      var a = 100;
+      function fn() {
+        var a = 200;
+        console.log('fn', a);
+      }
+      console.log('global', a); // 100
+      fn(); // 200
+    }
+
+
+    {
+      // 作用域链
+      var a = 100;
+      function fn () {
+        const b = 200;
+        console.log(a); // 100
+        console.log(b); // 200
+      }
+      fn();
+    }
+
+  </script>
+</body>
+
+</html>

@@ -112,6 +112,14 @@
       // console.log(slice(arr, 0));
       // console.log(slice.call(arr, 0));
     }
+
+    {
+      // 函数表达式可以直接用bind绑定，函数声明不能直接用bind绑定
+      const obj = {name: 'fang'};
+      function testBind() {
+        console.log(this.name);
+      }
+    }
   </script>
 </body>
 
