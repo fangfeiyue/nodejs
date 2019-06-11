@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    1.有一个包，最多能承载150kg的重量，现在有7个物品
+    重量分别为：[35, 30, 60, 50, 40, 10, 25]
+    价值分别为：[10, 40, 30, 50, 35, 40, 30]
+    问：用这个背包背走最多价值的物品，怎么背？
+    */ 
+
+    /*
+    2.如何在页面实现一个圆形的可点击区域？
+    */
+
+    /*
+    3.下面代码的输出什么？
+    */
+    var k = 1;
+    if (1){
+      // d = eval(function foo(){});
+      // console.log(d) // ƒ foo(){}
+      
+//       该方法只接受原始字符串作为参数，如果 string 参数不是原始字符串，那么该方法将不作任何改变地返回。因此请不要为 eval() 函数传递 String 对象来作为参数。
+
+// 如果试图覆盖 eval 属性或把 eval() 方法赋予另一个属性，并通过该属性调用它，则 ECMAScript 实现允许抛出一个 EvalError 异常。
+      a = eval("(function foo1(){console.log(111);})()"); // 111
+      console.log(typeof foo1, a); // undefined, undefined
+
+      c = eval((function foo2(){})());
+      console.log(typeof foo2, c); // undefined, undefined
+
+      eval(function foo(){console.log('foo')});
+      // foo(); // Uncaught ReferenceError: foo is not defined
+      // console.log(typeof foo); // undefined
+      // K += typeof foo; // Uncaught ReferenceError: K is not defined
+
+      k += typeof foo;
+    }
+    console.log(k); // 1undefined
+
+    /*
+    4.下面代码输出什么？
+    */
+    (function(){
+      // var a = b = 5; // 空
+      // Var a = b = 5; // Uncaught SyntaxError: Unexpected identifier
+    })()
+  </script>
+</body>
+</html>

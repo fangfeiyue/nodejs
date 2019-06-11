@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    1. Doctype的作用
+
+    DOCTYPE标签是一种标准通用标记语言的文档类型声明，它的目的是要告诉标准通用标记语言解析器，它应该使用什么样的文档类型定义（DTD）来解析文档
+
+    2.Html中有哪些元素类型，分别是什么？
+
+    https://blog.csdn.net/baidu_33163851/article/details/51068236
+
+    块状元素： <div> <p> <h1>.....<h6> <ol> <ul> <dl> <table> <address> <blockquote> <form>
+
+    行内元素：<a> <span> <br> <i> <em> <strong> <label> <q> <cite> <code> <var>
+
+    行内块级元素：<img> <input>
+
+    3.html5有哪些新特性？请简单描述
+
+    4.浏览器有哪些存储方式？分别有哪些特性
+
+    5.描述下css盒模型，css3哪个属性会修改盒模型表现
+
+    6.实现一个元素水平垂直居中
+
+    7.css有哪些选择符，优先级算法如何计算
+
+    8.css3有哪些新特性
+
+    9.css哪些属性会脱离文档流
+
+    10.什么是css sprite?
+
+    11.什么是重绘与回流
+
+    12.浏览器地址栏加载一个url的过程，越详细越好
+
+    13.请用js实现一个深拷贝，为什么需要深拷贝？平时有用哪些js基础库？
+
+    14.js判断数据类型有哪几种方式
+
+    15.描述下浏览器事件机制
+
+    16.前端异步解决方案有哪些
+
+    17.setTimeout(function(){}, 0)是什么意思？
+
+    18.null和undefined的区别
+
+    19.用正则表达式匹配18位身份证号码
+
+    20.什么是闭包？请写一个简单的例子
+
+    
+
+    21.webpack的loader和plugin的区别
+
+    loader 用于加载某些资源文件。 因为webpack 本身只能打包commonjs规范的js文件，对于其他资源例如 css，图片，或者其他的语法集，比如 jsx， coffee，是没有办法加载的。 这就需要对应的loader将资源转化，加载进来。从字面意思也能看出，loader是用于加载的，它作用于一个个文件上。
+
+    plugin 用于扩展webpack的功能。它直接作用于 webpack，扩展了它的功能。当然loader也时变相的扩展了 webpack ，但是它只专注于转化文件（transform）这一个领域。而plugin的功能更加的丰富，而不仅局限于资源的加载。
+
+    */
+
+    // 21. 这个题我写的是object，当时我把this当成变量了以为getNameFunc中的this形成了闭包，忘记了this谁调用指向谁，这里是window调用了返回的函数
+    var name = 'window';
+    var object = {
+      name: 'object',
+      getNameFunc: function() {
+        return function(){
+          return this.name;
+        }
+      }
+    };
+
+    console.log(object.getNameFunc()()); // window
+
+    //22.
+    function Foo(){
+      getName = function(){
+        console.log(1)
+      }
+
+      return this;
+    }
+
+    Foo.getName = function(){
+      console.log(2)
+    };
+
+    Foo.prototype.getName = function(){
+      console.log(3)
+    };
+
+    var getName = function(){
+      console.log(4)
+    };
+
+    function getName(){
+      console.log(5)
+    }
+
+    Foo.getName(); // 2
+    getName(); // 4
+    Foo().getName(); // 1
+    getName(); // 1
+    new Foo.getName(); // 2
+    new Foo().getName(); // 3
+    new new Foo().getName(); // 3
+
+    //23. 个人输出的是10
+    /*
+    第一步：var foo = 1;
+    全局变量foo被初始化赋值成1。
+    第二步：执行bar();方法。
+    第三步：bar()方法里，函数声明function foo(){}优先处理，这里JavaScript解析语法时（在运行之前）函数优先于一切。所以foo被初始化赋值为function(){};
+    第四步：执行foo = 10;这里制造了一个假象，认为没有用var 声明指向的是外层foo = 1;。其实不是。而是先在自身函数体里找有没有foo声明，找到之前声明的function foo(){};赋值成10，只是局部变量的值改写。
+    第五步：输出foo，这时找的是全局变量var foo = 1;输出1。
+    */
+    var foo = 1;
+    function bar() {
+      foo = 10;
+      return;
+      function foo(){};
+    }
+
+    bar();
+    console.log(foo); // 1
+
+    //24.
+    var i = 3, reg = /a/g;
+    while(i--){
+      setTimeout(function(){
+        console.log(i, reg.test('abc'));
+      }, 0);
+    }
+    /*
+    输出结果：
+    -1 true
+    -1 false
+    -1 true
+    */
+  </script>
+</body>
+</html>
